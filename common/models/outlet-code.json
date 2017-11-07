@@ -1,0 +1,36 @@
+{
+  "name": "OutletCode",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "code-id": {
+      "type": "string",
+      "required": true
+    },
+    "outlet-id": {
+      "type": "number",
+      "required": true
+    },
+    "used": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "used-date": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "voucherCode": {
+      "type": "belongsTo",
+      "model": "VoucherCode",
+      "foreignKey": "code-id"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

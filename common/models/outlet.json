@@ -1,0 +1,27 @@
+{
+  "name": "Outlet",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "promo": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "voucherCodes": {
+      "type": "hasMany",
+      "model": "VoucherCode",
+      "foreignKey": "outlet-origin"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

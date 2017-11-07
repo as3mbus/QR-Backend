@@ -1,0 +1,39 @@
+{
+  "name": "VoucherCode",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "code-id": {
+      "type": "string",
+      "id": true,
+      "required": true
+    },
+    "activated": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "expiry-date": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "outlet": {
+      "type": "belongsTo",
+      "model": "Outlet",
+      "foreignKey": "outlet-origin"
+    },
+    "outletCodes": {
+      "type": "hasMany",
+      "model": "OutletCode",
+      "foreignKey": "outlet-id"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
