@@ -14,13 +14,10 @@
       "type": "number",
       "required": true
     },
-    "used": {
-      "type": "boolean",
-      "required": true,
-      "default": false
-    },
     "used-date": {
-      "type": "date"
+      "type": "date",
+      "required":true,
+      "default":"$now"
     }
   },
   "validations": [],
@@ -29,7 +26,13 @@
       "type": "belongsTo",
       "model": "VoucherCode",
       "foreignKey": "code-id"
+    },
+    "outlet": {
+      "type": "belongsTo",
+      "model": "Outlet",
+      "foreignKey": "outlet-id"
     }
+    
   },
   "acls": [],
   "methods": {}

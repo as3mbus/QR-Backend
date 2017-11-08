@@ -1,7 +1,7 @@
 module.exports = function (app) {
   app.dataSources.mysql.automigrate('VoucherCode', function (err) {
     if (err) throw err;
-
+    
     app.models.VoucherCode.create([{
       "code-id": "abc111",
       "outlet-origin": 1,
@@ -47,18 +47,12 @@ module.exports = function (app) {
     app.models.OutletCode.create([{
       "code-id": "abc123",
       "outlet-id": "1",
-      "used": true,
-      "used-date": null
     }, {
       "code-id": "abc123",
       "outlet-id": "2",
-      "used": false,
-      "used-date": null
     }, {
       "code-id": "abc123",
       "outlet-id": "3",
-      "used": false,
-      "used-date": null
     }, ], function (err, OutletCode) {
       if (err) throw err;
 
