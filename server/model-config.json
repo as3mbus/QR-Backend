@@ -13,9 +13,6 @@
       "./mixins"
     ]
   },
-  "User": {
-    "dataSource": "db"
-  },
   "AccessToken": {
     "dataSource": "db",
     "public": false
@@ -34,9 +31,6 @@
   "Role": {
     "dataSource": "db",
     "public": false
-  },
-  "Message": {
-    "dataSource": null
   },
   "VoucherCode": {
     "dataSource": "mysql",
