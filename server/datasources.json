@@ -4,13 +4,13 @@
     "connector": "memory"
   },
   "mysql": {
-    "host": "127.0.0.1",
+    "host": "localhost",
     "port": 3306,
     "url": "",
-    "database": "check",
-    "password": "root",
+    "database": "root_qrasem",
+    "password": "doscom",
     "name": "mysql",
-    "user": "root",
+    "user": "root_qrasem",
     "connector": "mysql"
   }
 }
