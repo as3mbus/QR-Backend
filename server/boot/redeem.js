@@ -4,29 +4,7 @@ module.exports = function (server) {
   var router = server.loopback.Router()
   router.post(
     "/redeem/:codeid/:outletid",
-    function (req, res) {
-      server.models.OutletCode.findOne(
-        {"where": {"code_id": req.params.codeid, "outlet_id": req.params.outletid}},
-         function (err, OutletCode) {
-        if (err) res.json(err);
-        if(OutletCode){
-          var error = new Error();
-          error.message = 'Voucher Code already redeemed at '+OutletCode.used_date.toDateString();
-          error.statusCode = 404;
-          res.json(error);
-        }else {
-          server.models.OutletCode.create([{
-            "code_id": req.params.codeid,
-            "outlet_id": req.params.outletid,
-          }], function (err, OutletCode) {
-            if (err) throw err;
-            res.json(OutletCode)
-          });
-          
-        }
-      });
-      
-    }
+    server.models.OutletCode.redeemRequest
   );
   // router.get(
   //   "/active/:codeid",
