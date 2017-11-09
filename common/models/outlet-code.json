@@ -6,15 +6,15 @@
     "validateUpsert": true
   },
   "properties": {
-    "code-id": {
+    "code_id": {
       "type": "string",
       "required": true
     },
-    "outlet-id": {
+    "outlet_id": {
       "type": "number",
       "required": true
     },
-    "used-date": {
+    "used_date": {
       "type": "date",
       "required":true,
       "default":"$now"
@@ -25,12 +25,12 @@
     "voucherCode": {
       "type": "belongsTo",
       "model": "VoucherCode",
-      "foreignKey": "code-id"
+      "foreignKey": "code_id"
     },
     "outlet": {
       "type": "belongsTo",
       "model": "Outlet",
-      "foreignKey": "outlet-id"
+      "foreignKey": "outlet_id"
     }
     
   },

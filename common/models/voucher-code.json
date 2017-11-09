@@ -6,7 +6,7 @@
     "validateUpsert": true
   },
   "properties": {
-    "code-id": {
+    "code_id": {
       "type": "string",
       "id": true,
       "required": true
@@ -16,7 +16,7 @@
       "required": true,
       "default": false
     },
-    "expiry-date": {
+    "expiry_date": {
       "type": "date",
       "required": true
     }
@@ -31,7 +31,7 @@
     "outletCodes": {
       "type": "hasMany",
       "model": "OutletCode",
-      "foreignKey": "outlet-id"
+      "foreignKey": "outlet_id"
     }
   },
   "acls": [],

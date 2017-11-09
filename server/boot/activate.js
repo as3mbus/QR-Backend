@@ -17,8 +17,7 @@ module.exports = function (server) {
           error.statusCode = 404;
           res.json(error);
         }
-        
-      })
+      });
     }
   );
   router.get(

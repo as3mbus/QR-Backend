@@ -24,7 +24,7 @@
     "outletCodes": {
       "type": "hasMany",
       "model": "OutletCode",
-      "foreignKey": "outlet-id"
+      "foreignKey": "outlet_id"
     }
   },
   "acls": [],
