@@ -1,6 +1,47 @@
 'use strict';
 
 module.exports = function (VoucherCode) {
+  VoucherCode.isActive = function (codeid, callback) {
+    VoucherCode.findById(codeid,
+      function (err, fCode) {
+        if (err) {
+          console.log(err);
+          callback(5)
+        } else {
+          if (fCode) {
+            callback(fCode.activated,fCode)
+          } else {
+            callback(4)
+          }
+        }
+      }
+    );
+  };
+  VoucherCode.isActiveRemote = function(codeid,callback){
+    VoucherCode.isActive(codeid,function(resul){
+      callback(null,resul);
+    })
+  }
+  VoucherCode.remoteMethod(
+    'isActiveRemote', {
+      accepts: [{
+        arg: 'id',
+        type: 'string',
+        required: true,
+        http: {
+          source: 'path'
+        }
+      }],
+      http: {
+        path: '/:id/active',
+        verb: 'get'
+      },
+      returns: {
+        arg: 'active',
+        type: 'string'
+      }
+    }
+  );
   VoucherCode.activateRequest = function (codeid, res) {
     let apiMessage = {};
     VoucherCode.isActive(codeid, function (result,fCode) {
@@ -22,27 +63,10 @@ module.exports = function (VoucherCode) {
           apiMessage["statusCode"] = "500";
           apiMessage["message"] = "An unexpected error has occured";
           break;
-
       }
       res.json(apiMessage);
     });
 
-  };
-  VoucherCode.isActive = function (codeid, callback) {
-    VoucherCode.findById(codeid,
-      function (err, fCode) {
-        if (err) {
-          console.log(err);
-          callback(5)
-        } else {
-          if (fCode) {
-            callback(fCode.activated,fCode)
-          } else {
-            callback(4)
-          }
-        }
-      }
-    );
   };
   VoucherCode.isActiveRequest = function (codeid, res) {
     let apiMessage = {};
@@ -65,7 +89,6 @@ module.exports = function (VoucherCode) {
           apiMessage["statusCode"] = "500";
           apiMessage["message"] = "An unexpected error has occured";
           break;
-
       }
       res.json(apiMessage);
     });
