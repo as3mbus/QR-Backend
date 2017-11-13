@@ -1,7 +1,57 @@
 'use strict';
 
+var randomBarcode = function (strln) {
+  var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ"
+  var value = ''
+  for (var i = 0; i < strln; i++) {
+    var rnum = Math.floor(Math.random() * chars.length);
+    value += chars.substring(rnum, rnum + 1);
+  }
+  return value
+}
+
+function findWithAttr(array, attr, value) {
+  for (var i = 0; i < array.length; i += 1) {
+    if (array[i][attr] === value) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+
 module.exports = function (VoucherCode) {
 
+  VoucherCode.generateCode = function (outletid, expiry, res) {
+    let apiMessage = {
+      statusCode: 500,
+      message: "",
+      voucherCode: null
+    };
+    let _barcode = randomBarcode(3)
+    VoucherCode.find(null, function (err, voucherCodes) {
+      while (findWithAttr(voucherCodes, "code_id", _barcode) != -1) {
+        _barcode = randomBarcode(3)
+      }
+      let newCode = {
+        code_id: _barcode,
+        "outlet-origin": outletid,
+        "activated": false,
+        "expiry_date": expiry
+      }
+      VoucherCode.create(newCode, function (err, generatedCode) {
+        if (err) {
+          apiMessage["statusCode"] = 500;
+          apiMessage["message"] = "An unexpected error has occured";
+        } else {
+          apiMessage["statusCode"] = 200;
+          apiMessage["message"] = "Code " + generatedCode["code_id"] + " generated successfully";
+          apiMessage["voucherCode"] = generatedCode;
+        }
+        res.json(apiMessage);
+      })
+    })
+  }
 
   VoucherCode.isActive = function (codeid, callback) {
     VoucherCode.findById(codeid,
