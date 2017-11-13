@@ -16,8 +16,8 @@
     },
     "used_date": {
       "type": "date",
-      "required":true,
-      "default":"$now"
+      "required": true,
+      "default": "$now"
     }
   },
   "validations": [],
@@ -32,7 +32,7 @@
       "model": "Outlet",
       "foreignKey": "outlet_id"
     }
-    
+
   },
   "acls": [],
   "methods": {}

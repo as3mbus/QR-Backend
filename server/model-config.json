@@ -43,5 +43,9 @@
   "OutletCode": {
     "dataSource": "mysql",
     "public": true
+  },
+  "user": {
+    "dataSource": "db",
+    "public": true
   }
 }
