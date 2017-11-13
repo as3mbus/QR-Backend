@@ -78,8 +78,8 @@ module.exports = function (VoucherCode) {
 
 
   VoucherCode.isActiveRemote = function (codeid, callback) {
-    VoucherCode.isActive(codeid, function (resul) {
-      callback(null, resul);
+    VoucherCode.isActive(codeid, function (resultCode, vCode) {
+      callback(null, resultCode, vCode);
     })
   };
 
@@ -104,12 +104,18 @@ module.exports = function (VoucherCode) {
         path: '/:id/active',
         verb: 'get'
       },
-      returns: {
-        arg: 'active',
-        type: 'string'
-      }
+      returns: [{
+          arg: 'resultCode',
+          type: 'string'
+        },
+        {
+          arg: 'voucherCode',
+          type: 'object'
+        }
+      ]
     }
   );
+
   VoucherCode.remoteMethod(
     'activateRemote', {
       accepts: [{
