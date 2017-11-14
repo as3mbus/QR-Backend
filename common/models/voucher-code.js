@@ -70,6 +70,49 @@ module.exports = function (VoucherCode) {
     );
   };
 
+  VoucherCode.isActiveResponse = function (result, object, callback) {
+    let apiMessage = {
+      statusCode: 500,
+      message: "",
+      VoucherCode: null
+    };
+    switch (result) {
+      case true:
+        apiMessage["statusCode"] = 201;
+        apiMessage["message"] = "Voucher Code is active";
+        apiMessage["VoucherCode"] = object;
+        break;
+      case false:
+        apiMessage["statusCode"] = 200;
+        apiMessage["message"] = "Voucher Code have not activated please contact the voucher distirbutor";
+        apiMessage["VoucherCode"] = object
+        break;
+      case 4:
+        apiMessage["statusCode"] = 404;
+        apiMessage["message"] = "Voucher Code not found";
+        break;
+      default:
+        apiMessage["statusCode"] = 500;
+        apiMessage["message"] = "An unexpected error has occured";
+        break;
+    }
+    callback(apiMessage)
+  };
+
+  VoucherCode.isActiveRequest = function (codeid, res) {
+    VoucherCode.isActive(codeid, function (result, fCode) {
+      VoucherCode.isActiveResponse(result, fCode, function (message) {
+        res.json(message);
+      });
+    });
+  };
+
+  VoucherCode.isActiveRemote = function (codeid, callback) {
+    VoucherCode.isActive(codeid, function (resultCode, vCode) {
+      callback(null, resultCode, vCode);
+    })
+  };
+
   VoucherCode.activate = function (codeid, callback) {
     VoucherCode.isActive(codeid, (result, fCode) => {
       switch (result) {
@@ -126,10 +169,11 @@ module.exports = function (VoucherCode) {
     callback(apiMessage)
   };
 
-
-  VoucherCode.isActiveRemote = function (codeid, callback) {
-    VoucherCode.isActive(codeid, function (resultCode, vCode) {
-      callback(null, resultCode, vCode);
+  VoucherCode.activateRequest = function (codeid, res) {
+    VoucherCode.activate(codeid, (result, vCode) => {
+      VoucherCode.activateResponse(result, vCode, function (message) {
+        res.json(message);
+      });
     })
   };
 
@@ -138,7 +182,6 @@ module.exports = function (VoucherCode) {
       callback(null, resultCode, VoucherCode);
     })
   };
-
 
   VoucherCode.remoteMethod(
     'isActiveRemote', {
@@ -186,46 +229,5 @@ module.exports = function (VoucherCode) {
       }]
     }
   );
-
-
-  VoucherCode.activateRequest = function (codeid, res) {
-    VoucherCode.activate(codeid, (result, vCode) => {
-      VoucherCode.activateResponse(result, vCode, function (message) {
-        res.json(message);
-      });
-    })
-  };
-
-
-  VoucherCode.isActiveRequest = function (codeid, res) {
-    let apiMessage = {
-      statusCode: 500,
-      message: "",
-      VoucherCode: null
-    };
-    VoucherCode.isActive(codeid, function (result) {
-      switch (result) {
-        case true:
-          apiMessage["statusCode"] = 201;
-          apiMessage["message"] = "Voucher Code " + codeid + " is active";
-          apiMessage["VoucherCode"] = object;
-          break;
-        case false:
-          apiMessage["statusCode"] = 200;
-          apiMessage["message"] = "Voucher Code " + codeid + " have not activated please contact the voucher distirbutor";
-          apiMessage["VoucherCode"] = object
-          break;
-        case 4:
-          apiMessage["statusCode"] = 404;
-          apiMessage["message"] = "Voucher Code not found";
-          break;
-        default:
-          apiMessage["statusCode"] = 500;
-          apiMessage["message"] = "An unexpected error has occured";
-          break;
-      }
-      res.json(apiMessage);
-    });
-  };
 
 };

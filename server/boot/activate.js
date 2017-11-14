@@ -3,9 +3,9 @@
 module.exports = function (app) {
   var router = app.loopback.Router()
   router.patch(
-    "/activate/:codeid",
+    "/activate",
     function (req, res) {
-      app.models.VoucherCode.activateRequest(req.params.codeid, res);
+      app.models.VoucherCode.activateRequest(req.body.codeid, res);
     }
   );
   router.get(
