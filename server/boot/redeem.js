@@ -6,26 +6,11 @@ module.exports = function (server) {
     "/redeem/:codeid/:outletid",
     server.models.OutletCode.redeemRequest
   );
-  // router.get(
-  //   "/active/:codeid",
-  //   function (req, res) {
-  //     server.models.VoucherCode.findById(req.params.codeid,
-  //       function (err, vCode) {
-  //         if (err) {
-  //           console.log(err);
-  //           res.json(err);
-  //         } else {
-  //           if (vCode) {
-  //             res.json(vCode.activated);
-  //           } else {
-  //             var error = new Error();
-  //             error.message = 'Voucher Code not found.';
-  //             error.statusCode = 404;
-  //             res.json(error);
-  //           }
-  //         }
-  //       }
-  //     );
-  //   });
+  router.get(
+    "/redeem/:codeid/:outletid",
+    function(req, res){
+      server.models.OutletCode.isRedeemedRequest(req.params.codeid, req.params.outletid, res)
+    }
+  )
   server.use(router);
 }
