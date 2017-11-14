@@ -107,7 +107,7 @@ module.exports = function (OutletCode) {
       }
     });
 
-  }
+  };
 
   OutletCode.isRedeemedResponse = function (result, object, callback) {
     let apiMessage = {
